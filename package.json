@@ -1,0 +1,25 @@
+{
+  "name": "Nodejs_Module_part_1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "module": "main.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/evgeniy-bokshits/frontcamp_nodejs_module.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/evgeniy-bokshits/frontcamp_nodejs_module/issues"
+  },
+  "homepage": "https://github.com/evgeniy-bokshits/frontcamp_nodejs_module#readme"
+}
