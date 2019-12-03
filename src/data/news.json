@@ -1,0 +1,45 @@
+[{
+        "id": "1",
+        "author": "Katie Engelhart",
+        "content": "Thousands of Americans are discharged against their wishes or evicted from nursing homes each year. “Most people don’t even know they have rights,” a vice president at the AARP Foundation said.",
+        "publishedAt": "2019-11-25T09:30:00Z",
+        "source": {
+            "id": "nbc-news",
+            "name": "NBC News"
+        },
+        "title": "Some nursing homes are illegally evicting elderly and disabled residents who can't afford to pay - NBC News"
+    },
+    {
+        "id": "2",
+        "author": "CNET staff",
+        "content": "The year's biggest shopping event is here and we've run down every single sale you need to know about.",
+        "publishedAt": "2019-11-25T09:18:00Z",
+        "source": {
+            "id": null,
+            "name": "Cnet.com"
+        },
+        "title": "Black Friday 2019 is here: Our ultimate guide to this year's biggest deals - CNET"
+    },
+    {
+        "id": "3",
+        "author": "TMZ Staff",
+        "content": "Kid Rock made himself look sloppy and crude with this one.",
+        "publishedAt": "2019-11-25T08:34:00Z",
+        "source": {
+            "id": null,
+            "name": "Tmz.com"
+        },
+        "title": "Kid Rock Goes on Drunken Rant About Oprah, Insists He's Not Racist - TMZ"
+    },
+    {
+        "id": "4",
+        "author": "Katie Engelhart",
+        "content": "Johnson, who described himself as a longtime Democrat, has made headlines multiple times for praising Trump.",
+        "publishedAt": "2019-11-25T09:30:00Z",
+        "source": {
+            "id": "cnbc",
+            "name": "CNBC"
+        },
+        "title": "2020 US presidential election is Trump's to lose, says BET founder Bob Johnson - CNBC"
+    }
+]
