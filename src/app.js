@@ -5,8 +5,11 @@ const express = require('express');
 const app = express();
 
 const router = require('./router');
+const usersRoute = require('./usersRouter');
 
 app.use('/', router);
+app.use("/users", usersRoute);
+
 
 app.use((err, req, res, next) => {
     console.error(err);

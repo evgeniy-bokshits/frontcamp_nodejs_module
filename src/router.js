@@ -1,9 +1,20 @@
 const express = require('express');
 const path = require('path');
 
+const bodyParser = require('body-parser');
+const rowParser = bodyParser.json();
+
 const router = express.Router();
-const newsDataResponse = require('./data/news');
 const logger = require('./logger');
+
+const passport = require('./auth/passport');
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://test-user:hellomongo@cluster0-gqkd1.azure.mongodb.net/nodejs_module?retryWrites=true&w=majority', { useUnifiedTopology: true });
+
+const NewsModel = require('./db-models/news-model').NewsModel;
+
+router.use(passport.initialize());
 
 router.use(({ path }, res, next) => {
     logger.info(path);
@@ -15,39 +26,63 @@ router.get('/', (req, res) => {
 });
 
 router.get('/news', (req, res) => {
-    res.send(JSON.stringify(newsDataResponse));
+    NewsModel.find(function (err, result) {
+        if (err) {
+            return next(err);
+        }
+
+        res.send(JSON.stringify(result));
+    });
 });
 
 router.get('/news/:id', ({ params: { id } }, res) => {
-    const itemByID = newsDataResponse.find(({ id }) => id === id);
-    res.send(JSON.stringify(itemByID));
+    NewsModel.findById(id, function (err, result) {
+        if (err) {
+            return next(err);
+        }
+
+        res.send(JSON.stringify(result));
+    });
 });
 
-router.post('/news', (req, res) => {
-    res.send('Post req has been completed!');
+router.post('/news', passport.authenticate('local', { failureRedirect: '/error' }), rowParser, (req, res, next) => {
+    let news = new NewsModel(req.body);
+    news.save(function (err) {
+        if (err) {
+            next(err);
+        }
+
+        res.status(201).send();
+    })
 });
 
-router.put('/news/:id', ({ params: { id } }, res) => {
-    newsDataResponse.push(JSON.parse(`
-        {
-            "id": "${id}",
-            "author": "Katie Engelhart",
-            "content": "Thousands of Americans are discharged against their wishes or evicted from nursing homes each year. “Most people don’t even know they have rights,” a vice president at the AARP Foundation said.",
-            "publishedAt": "2019-11-25T09:30:00Z",
-            "source": {
-                "id": "nbc-news",
-                "name": "NBC News"
-            },
-            "title": "Some nursing homes are illegally evicting elderly and disabled residents who can't afford to pay - NBC News"
-        }`));
-    res.status(200).send(newsDataResponse);
+router.put('/news/:id', rowParser, (req, res) => {
+    NewsModel.findByIdAndUpdate(req.params.id, { $set: req.body }, function (err, result) {
+        if (err) {
+            return next(err);
+        }
+
+        if (result) {
+            res.status(200).send();
+        }
+        else {
+            res.status(404).send(errorCompiledFunction({ statusCode: "404", errorMessage: `Can't find news with id - ${req.params.id}` }));
+        }
+    });
 });
 
 router.delete('/news/:id', ({ params: { id } }, res) => {
-    let itemsWithoutRemoved = newsDataResponse.filter((el) => {
-        return el.id !== id;
-      });
-    res.json(itemsWithoutRemoved);
+    NewsModel.findByIdAndDelete(id, function (err, result) {
+        if (err) {
+            return next(err);
+        }
+
+        if (result) {
+            res.status(200).send();
+        } else {
+            res.status(404).send(errorCompiledFunction({ statusCode: "404", errorMessage: `No any news` }));
+        }
+    });
 });
 
 module.exports = router;
